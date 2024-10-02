@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+LOGIN
+{% endblock title %}
+
+
+
+{% block content %}
+<div>
+    <h2>Login</h2>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Login</button>
+    </form>
+</div>
+<div>
+    {% comment %} <h2>Do not have account ? <a href="{% url "account:register" %}">Register</a></h2> {% endcomment %}
+</div>
+{% endblock content %}
+
+

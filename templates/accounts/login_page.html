@@ -10,14 +10,15 @@ LOGIN
 {% block content %}
 <div>
     <h2>Login</h2>
-    <form action="" method="post">
+    {{user.is_authenticated}}
+    <form method="post">
         {% csrf_token %}
         {{form.as_p}}
         <button type="submit">Login</button>
     </form>
 </div>
 <div>
-    {% comment %} <h2>Do not have account ? <a href="{% url "account:register" %}">Register</a></h2> {% endcomment %}
+    <h2>Do not have account ? <a href="{% url "accounts:register" %}">Register</a></h2>
 </div>
 {% endblock content %}
 

@@ -8,5 +8,19 @@ Tasks
 
 
 {% block content %}
-<h1>Hello</h1>
+<h1>Welcome to Todo-app</h1>
+<a href="{% url "task:add" %}">Add task</a>
+<ul>
+    {% if tasks %}
+        {% for task in tasks %}
+            {% if task.done %}
+                <li style="background-color: green;">{{task.title}}</li>
+            {% else %}
+                <li style="background-color: yellow;">{{task.title}}</li>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <h3>You do not have any tasks</h3>
+    {% endif %}
+</ul>
 {% endblock content %}

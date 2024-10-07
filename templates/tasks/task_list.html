@@ -9,7 +9,7 @@ Tasks
 
 {% block content %}
 <h1>Welcome to Todo-app</h1>
-<a href="{% url "task:add" %}">Add task</a>
+{% comment %} <a href="{% url "tasks:add" %}">Add task</a> {% endcomment %}
 <ul>
     {% if tasks %}
         {% for task in tasks %}

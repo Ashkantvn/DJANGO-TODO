@@ -1,5 +1,7 @@
 
 from django.shortcuts import render,HttpResponse
+from django.views.generic.base import TemplateView
 # Create your views here.
-def index(request):
-    return HttpResponse('hello tasks')
+class TaskList(TemplateView):
+    template_name="tasks/task_list.html"
+    

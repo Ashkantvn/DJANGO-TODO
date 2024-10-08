@@ -31,8 +31,10 @@ class TaskDetails(LoginRequiredMixin,DetailView):
     template_name = "tasks/task_details.html"
 
 
-# class TaskDelete(DeleteView):
-#     model = Task
-#     template_name = "tasks/task_delete.html"
+class TaskDelete(DeleteView):
+    model = Task
+    template_name = "tasks/task_delete.html"
+    success_url = reverse_lazy("tasks:home")
+    
 
     

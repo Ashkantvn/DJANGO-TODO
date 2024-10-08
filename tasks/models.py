@@ -23,4 +23,7 @@ class Task(models.Model):
     def get_update_url(self):
         return reverse('tasks:update',kwargs={'pk':self.pk})
     
+    def get_edit_url(self):
+        return reverse('tasks:edit',kwargs={'pk':self.pk})
+    
     

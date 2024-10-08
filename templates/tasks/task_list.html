@@ -9,20 +9,22 @@ Tasks
 {% block content %}
 <h1>Welcome to Todo-app</h1>
 <a href="{% url "tasks:add" %}">Add task</a>
-<ul>
+<ul class='ul'>
     {% if tasks %}
         {% for task in tasks %}
             {% comment "" %}if task was done , it will return li with green background {% endcomment %}
             {% if task.done %}
-                <li style="background-color: green;"  >
-                    <a href="{{task.get_absolute_url}}">{{task.title}}</a>
-                    <a href="{{task.get_update_url}}">&#10004</a>
+                <li class="success li">
+                    <a href="{{task.get_absolute_url}}" class="li-title">{{task.title}}</a>
+                    <a href="{{task.get_update_url}}">&#10006</a>
+                    <a href="{{task.get_edit_url}}">&#9998</a>
                     <a href="{{task.get_delete_url}}">Delete</a>
                 </li>
             {% else %}
-                <li style="background-color: yellow;"   >
-                    <a href="{{task.get_absolute_url}}">{{task.title}}</a>
-                    <a href="{{task.get_update_url}}">&#10006</a>
+                <li class="unfinished li">
+                    <a href="{{task.get_absolute_url}}" class="li-title">{{task.title}}</a>
+                    <a href="{{task.get_update_url}}">&#10004</a>
+                    <a href="{{task.get_edit_url}}">&#9998</a>
                     <a href="{{task.get_delete_url}}">Delete</a>
                 </li>
             {% endif %}

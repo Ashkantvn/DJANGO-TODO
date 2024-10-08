@@ -4,18 +4,16 @@
 
 
 {% block title %}
-Add/Edit task
+    Add/Edit task
 {% endblock title %}
 
 
 {% block content %}
-
-<form method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">Submit</button>
-</form>
-
+    <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Submit</button>
+    </form>
 {% endblock content %}
 
 

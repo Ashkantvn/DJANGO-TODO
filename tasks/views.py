@@ -35,6 +35,12 @@ class TaskDetails(LoginRequiredMixin,DetailView):
     model= Task
     template_name = "tasks/task_details.html"
 
+    def get(self, request, *args, **kwargs):
+        task=self.get_object()
+        if task.creator != self.request.user:
+            return redirect('tasks:home')
+        return super().get(request, *args, **kwargs)
+
 
 class TaskDelete(LoginRequiredMixin,DeleteView):
     model = Task
@@ -51,8 +57,9 @@ class TaskDelete(LoginRequiredMixin,DeleteView):
 class TaskUpdate(LoginRequiredMixin,View):
     def get(self,request,pk):
         task = Task.objects.get(pk=pk)
-        task.done = not task.done
-        task.save()
+        if task.creator == self.request.user:
+            task.done = not task.done
+            task.save()
         return redirect('tasks:home')
     
 
@@ -60,6 +67,11 @@ class TaskEdit(UpdateView):
     model = Task
     template_name = "tasks/task_add.html"
     fields = ['title' , 'description']
+    def get(self, request, *args, **kwargs):
+        task=self.get_object()
+        if task.creator != self.request.user:
+            return redirect('tasks:home')
+        return super().get(request, *args, **kwargs)
 
 
 

@@ -14,9 +14,9 @@ Tasks
     {% if tasks %}
         {% for task in tasks %}
             {% if task.done %}
-                <li style="background-color: green;">{{task.title}}</li>
+                <li style="background-color: green;"><a href="{{task.get_absolute_url}}">{{task.title}}</a></li>
             {% else %}
-                <li style="background-color: yellow;">{{task.title}}</li>
+                <li style="background-color: yellow;"><a href="{{task.get_absolute_url}}">{{task.title}}</a></li>
             {% endif %}
         {% endfor %}
     {% else %}

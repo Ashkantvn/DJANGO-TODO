@@ -1,8 +1,7 @@
 
 from django.shortcuts import redirect
-from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView,DeleteView
+from django.views.generic.edit import CreateView,DeleteView,UpdateView
 from django.views.generic.detail import DetailView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -47,5 +46,22 @@ class TaskDelete(LoginRequiredMixin,DeleteView):
         if task.creator != self.request.user:
             return redirect('tasks:home')
         return super().dispatch(request, *args, **kwargs)
+    
+
+class TaskUpdate(LoginRequiredMixin,View):
+    def get(self,request,pk):
+        task = Task.objects.get(pk=pk)
+        task.done = not task.done
+        task.save()
+        return redirect('tasks:home')
+    
+
+class TaskEdit(UpdateView):
+    model = Task
+    template_name = "tasks/task_add.html"
+    fields = ['title' , 'description']
+
+
+
     
     

@@ -13,10 +13,19 @@ Tasks
     {% if tasks %}
         {% for task in tasks %}
             {% comment "" %}if task was done , it will return li with green background {% endcomment %}
-            <li {% if task.done %} style="background-color: green;" {% else %} style="background-color: yellow;" {% endif %}>
-                <a href="{{task.get_absolute_url}}">{{task.title}}</a>
-                <a href="{{task.get_delete_url}}">Delete</a>
-            </li>
+            {% if task.done %}
+                <li style="background-color: green;"  >
+                    <a href="{{task.get_absolute_url}}">{{task.title}}</a>
+                    <a href="{{task.get_update_url}}">&#10004</a>
+                    <a href="{{task.get_delete_url}}">Delete</a>
+                </li>
+            {% else %}
+                <li style="background-color: yellow;"   >
+                    <a href="{{task.get_absolute_url}}">{{task.title}}</a>
+                    <a href="{{task.get_update_url}}">&#10006</a>
+                    <a href="{{task.get_delete_url}}">Delete</a>
+                </li>
+            {% endif %}
         {% endfor %}
     {% else %}
         <h3>You do not have any tasks</h3>

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from rest_framework import exceptions
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 
@@ -22,12 +22,11 @@ class RegistrationSerializer(serializers.ModelSerializer):
         
         try:
             validate_password(attrs.get('password'))
-        except exceptions.ValidationError as error:
-            raise serializers.ValidationError({'password':list(error)})
+        except ValidationError as error:
+            raise serializers.ValidationError({'password':list(error.messages)})
+        
         return super().validate(attrs)
     
-
     def create(self, validated_data):
-        validated_data.pop('password1', None)
-        print(validated_data)
+        validated_data.pop('password1',None)
         return User.objects.create_user(**validated_data)

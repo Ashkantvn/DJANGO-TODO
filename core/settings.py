@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'accounts',
     'tasks',
     'rest_framework',
+    'rest_framework.authtoken'
     'drf_yasg',
 ]
 
@@ -138,3 +139,12 @@ LOGOUT_REDIRECT_URL = LOGIN_URL
 
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db' 
+
+
+# authentication 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}

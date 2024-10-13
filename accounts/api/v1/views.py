@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
 
 
 class ProfileAPIView(GenericAPIView):
@@ -25,10 +26,13 @@ class RegistrationAPIView(GenericAPIView):
 
     def post(self, request, *args, **kwargs):
         serializer = RegistrationSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response("successfully registered",status=status.HTTP_201_CREATED)
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        username = serializer._validated_data['username']
+        user = User.objects.get(username=username)
+        token, created = Token.objects.get_or_create(user=user)
+        serializer.save()
+        return Response({"user":username,"token":token.key,'message':"successfully registered"},status=status.HTTP_201_CREATED)
     
 
     

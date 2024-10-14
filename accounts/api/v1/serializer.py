@@ -31,6 +31,3 @@ class RegistrationSerializer(serializers.ModelSerializer):
         validated_data.pop('password1',None)
         return User.objects.create_user(**validated_data)
     
-
-class TokenDecodeSerializer(serializers.Serializer):
-    pass

@@ -1,14 +1,17 @@
 from rest_framework.generics import GenericAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializer import UserSerializer,RegistrationSerializer,TokenDecodeSerializer
+from .serializer import UserSerializer,RegistrationSerializer
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
-
+import jwt
+from jwt import exceptions
+from django.conf import settings
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class ProfileAPIView(GenericAPIView):
     serializer_class = UserSerializer
@@ -76,4 +79,28 @@ class LogoutAPIView(APIView):
 
 # jwt authentication
 class JwtProfileAPIView(GenericAPIView):
-    pass
+    serializer_class = UserSerializer
+    
+    def get(self, request,token,format=None):
+        try:
+            token = jwt.decode(token,settings.SECRET_KEY,algorithms=['HS256'])
+            user_id = token['user_id']
+            user = get_object_or_404(User,id=user_id)
+            serializer = UserSerializer(user)
+            return Response({"user":serializer.data},status=status.HTTP_200_OK)
+        except exceptions.ExpiredSignatureError:
+            return Response({"detail":"token has been expired"},status=status.HTTP_400_BAD_REQUEST)
+        except exceptions.InvalidSignatureError:
+            return Response({"detail":"token is invalid"},status=status.HTTP_400_BAD_REQUEST)
+
+
+class JwtRegistrationAPIView(GenericAPIView):
+    serializer_class = RegistrationSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = RegistrationSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user= serializer.save()
+        token = RefreshToken.for_user(user=user)
+        return Response({"refresh":str(token),'access':str(token.access_token)},status=status.HTTP_201_CREATED)
+    

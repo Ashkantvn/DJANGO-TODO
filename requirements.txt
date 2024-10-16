@@ -7,3 +7,14 @@ djangorestframework
 markdown
 django-filter
 drf-yasg[validation]
+djangorestframework-simplejwt
+
+
+black
+flake8
+
+
+pytest
+pytest-django
+setuptools
+

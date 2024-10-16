@@ -83,8 +83,7 @@ class JwtProfileAPIView(GenericAPIView):
         try:
             token = jwt.decode(token,
                                settings.SECRET_KEY,
-                               algorithms=["HS256"]
-                               )
+                               algorithms=["HS256"])
             user_id = token["user_id"]
             user = get_object_or_404(User, id=user_id)
             serializer = UserSerializer(user)

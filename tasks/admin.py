@@ -5,4 +5,4 @@ from .models import Task
 # Register your models here.
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ["title", "done", "created_date", "pk",'creator']
+    list_display = ["title", "done", "created_date", "pk", "creator"]

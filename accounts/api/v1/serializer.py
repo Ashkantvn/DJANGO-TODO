@@ -20,17 +20,13 @@ class RegistrationSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         if attrs.get("password") != attrs.get("password1"):
             raise serializers.ValidationError(
-                {
-                    "detail": "Password does not match"
-                })
+                {"detail": "Password does not match"})
 
         try:
             validate_password(attrs.get("password"))
         except ValidationError as error:
             raise serializers.ValidationError(
-                {
-                    "password": list(error.messages)
-                })
+                {"password": list(error.messages)})
 
         return super().validate(attrs)
 

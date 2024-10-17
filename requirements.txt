@@ -10,11 +10,19 @@ drf-yasg[validation]
 djangorestframework-simplejwt
 
 
+#test and reformat
 black
 flake8
-
-
 pytest
 pytest-django
 setuptools
 faker
+
+
+
+
+# background proccess
+redis 
+celery
+django-celery-beat
+

@@ -9,4 +9,8 @@ exclude=
     __pycache__,
     settings.py,
     __init__.py,
-    test_*.py
+    test_*.py,
+    celery.py
+
+ignore=
+    E501

@@ -16,7 +16,9 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path, include, reverse_lazy
+from django.urls import path, include, reverse_lazy,re_path
+from django.views.static import serve
+from django.conf import settings
 from django.views.generic.base import RedirectView
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -36,6 +38,10 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
+    re_path(r"^media/(?P<path>.*)$", serve,{'document_root' : settings.MEDIA_ROOT}),
+    re_path(r"^static/(?P<path>.*)$", serve,{'document_root' : settings.STATIC_ROOT}),
+
+
     path("", RedirectView.as_view(url=reverse_lazy("tasks:home")), name=""),
     path("admin/", admin.site.urls),
     path("accounts/", include("accounts.urls")),

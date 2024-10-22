@@ -1,15 +1,12 @@
 FROM python:3.12-slim
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
 WORKDIR /todo
 
-COPY requirements.txt /todo/
-
-RUN pip install --upgrade pip
+COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
-COPY . /todo/
+COPY . .
 
-CMD [ "python",'manage.py','runserver',"0.0.0.0:8080" ]
+RUN python manage.py collectstatic --noinput
+
+CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8000"]

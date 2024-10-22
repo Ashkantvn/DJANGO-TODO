@@ -9,6 +9,7 @@ services:
     depends_on:
       - redis
       - celery
+      - celery-beat
 
   redis:
     image: redis:latest

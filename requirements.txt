@@ -29,3 +29,7 @@ django-celery-beat
 # cache
 requests 
 django-redis
+
+
+#deploy
+gunicorn
